@@ -1,7 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:paperplayer/ui/screens/dashboard/browse_screen.dart';
 import 'package:paperplayer/ui/screens/dashboard/home.dart';
-
+import 'package:paperplayer/ui/screens/main_drawer/about.dart';
+import 'package:paperplayer/ui/screens/main_drawer/contact.dart';
+import 'package:paperplayer/ui/screens/main_drawer/how.dart';
+import 'package:paperplayer/ui/screens/training/camera.dart';
+import 'package:paperplayer/ui/screens/training/player_training_intro.dart';
+import 'package:paperplayer/ui/screens/user_drawer/cart.dart';
+import 'package:paperplayer/ui/screens/user_drawer/cart.dart';
+import 'package:paperplayer/ui/screens/user_drawer/collection.dart';
+import 'package:paperplayer/ui/screens/user_drawer/collection.dart';
+import 'package:paperplayer/ui/screens/user_drawer/personal.dart';
+import 'package:paperplayer/ui/screens/user_drawer/personal.dart';
 import 'ui/screens/onboarding/walkthrough.dart';
 
 void main() {
@@ -21,6 +31,14 @@ class MyApp extends StatelessWidget {
       routes: {
         HomeScreen.routeName: (ctx) => HomeScreen(),
         BrowseScreen.routeName: (ctx) => BrowseScreen(),
+        TrainingIntro.routeName: (ctx) => TrainingIntro(),
+        CameraScreen.routeName: (ctx) => CameraScreen(),
+        HowItWorks.routeName: (ctx) => HowItWorks(),
+        About.routeName: (ctx) => About(),
+        Contact.routeName: (ctx) => Contact(),
+        Collection.routeName: (ctx) => Collection(),
+        Cart.routeName: (ctx) => Cart(),
+        Personal.routeName: (ctx) => Personal(),
       },
     );
   }
