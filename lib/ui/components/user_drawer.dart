@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+import 'package:flutter_svg_provider/flutter_svg_provider.dart';
+import 'package:paperplayer/ui/animations/slide_navigation.dart';
+import 'package:paperplayer/ui/screens/user_drawer/cart.dart';
+import 'package:paperplayer/ui/screens/user_drawer/collection.dart';
+import 'package:paperplayer/ui/screens/user_drawer/personal.dart';
 import 'package:paperplayer/util/constants.dart';
 import 'package:paperplayer/util/size_config.dart';
 
@@ -16,78 +20,120 @@ class UserDrawer extends StatelessWidget {
           children: [
             buildTopDetails(),
             Divider(),
-            ListTile(
-              leading: Icon(
-                Icons.person,
-                size: SizeConfig.blockSizeHorizontal * 6,
-              ),
-              title: Text(
-                'Personal Information',
-                style: TextStyle(
-                  color: Constants.darkTextColor,
-                  fontFamily: 'Metropolis',
-                  fontWeight: FontWeight.w500,
-                  fontSize: SizeConfig.blockSizeHorizontal * 3.5,
+            GestureDetector(
+              onTap: () {
+                Navigator.push(
+                    context, SlideRightRoute(
+                        builder: (context) => Personal()
+                    )
+                );
+              },
+              child: ListTile(
+                leading: Image(
+                  height: SizeConfig.blockSizeHorizontal * 5.5,
+                  width: SizeConfig.blockSizeHorizontal * 5.5,
+                  color: Constants.browseGrey,
+                  image: Svg('assets/icons/user-circle.svg'),
+                ),
+                title: Text(
+                  'Personal Information',
+                  style: TextStyle(
+                    color: Constants.darkTextColor,
+                    fontFamily: 'Metropolis',
+                    fontWeight: FontWeight.w500,
+                    fontSize: SizeConfig.blockSizeHorizontal * 3.5,
+                  ),
+                ),
+                trailing: Icon(
+                  Icons.arrow_forward_ios,
+                  size: SizeConfig.blockSizeHorizontal * 4,
                 ),
               ),
-              trailing: Icon(Icons.arrow_forward_ios),
             ),
             Divider(),
-            ListTile(
-              leading: Icon(
-                Icons.library_books,
-                size: SizeConfig.blockSizeHorizontal * 6,
-              ),
-              title: Text(
-                'My Collection',
-                style: TextStyle(
-                  color: Constants.darkTextColor,
-                  fontFamily: 'Metropolis',
-                  fontWeight: FontWeight.w500,
-                  fontSize: SizeConfig.blockSizeHorizontal * 3.5,
+            GestureDetector(
+              onTap: () {
+                Navigator.push(
+                    context, SlideRightRoute(
+                    builder: (context) => Collection()
+                )
+                );
+              },
+              child: ListTile(
+                leading: Image(
+                  height: SizeConfig.blockSizeHorizontal * 5.5,
+                  width: SizeConfig.blockSizeHorizontal * 5.5,
+                  color: Constants.browseGrey,
+                  image: Svg('assets/icons/album-collection.svg'),
+                ),
+                title: Text(
+                  'My Collection',
+                  style: TextStyle(
+                    color: Constants.darkTextColor,
+                    fontFamily: 'Metropolis',
+                    fontWeight: FontWeight.w500,
+                    fontSize: SizeConfig.blockSizeHorizontal * 3.5,
+                  ),
+                ),
+                trailing: Icon(
+                  Icons.arrow_forward_ios,
+                  size: SizeConfig.blockSizeHorizontal * 4,
                 ),
               ),
-              trailing: Icon(Icons.arrow_forward_ios),
             ),
             Divider(),
             Spacer(),
-            ListTile(
-              leading: Icon(
-                Icons.shopping_cart,
-                size: SizeConfig.blockSizeHorizontal * 6,
-              ),
-              title: Text(
-                'Cart',
-                style: TextStyle(
-                  color: Constants.darkTextColor,
-                  fontFamily: 'Metropolis',
-                  fontWeight: FontWeight.w500,
-                  fontSize: SizeConfig.blockSizeHorizontal * 3.5,
+            GestureDetector(
+              onTap: () {
+                Navigator.push(
+                    context, SlideRightRoute(
+                    builder: (context) => Cart()
+                )
+                );
+              },
+              child: ListTile(
+                leading: Image(
+                  height: SizeConfig.blockSizeHorizontal * 5.5,
+                  width: SizeConfig.blockSizeHorizontal * 5.5,
+                  color: Constants.browseGrey,
+                  image: Svg('assets/icons/shopping-bag.svg'),
                 ),
-              ),
-              trailing: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  ClipRRect(
-                    borderRadius: BorderRadius.circular(30.0),
-                    child: Container(
-                      color: Constants.tagYellow,
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Text(
-                          '5/\$30',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontFamily: 'Metropolis',
-                            fontWeight: FontWeight.w600,
-                            fontSize: SizeConfig.blockSizeHorizontal * 3.5,
+                title: Text(
+                  'Cart',
+                  style: TextStyle(
+                    color: Constants.darkTextColor,
+                    fontFamily: 'Metropolis',
+                    fontWeight: FontWeight.w500,
+                    fontSize: SizeConfig.blockSizeHorizontal * 3.5,
+                  ),
+                ),
+                trailing: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(30.0),
+                      child: Container(
+                        color: Constants.tagYellow,
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Text(
+                            '5/\$30',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontFamily: 'Metropolis',
+                              fontWeight: FontWeight.w600,
+                              fontSize: SizeConfig.blockSizeHorizontal * 3.5,
+                            ),
                           ),
                         ),
                       ),
                     ),
-                  ),
-                  Icon(Icons.arrow_forward_ios),
-                ],
+                    Icon(
+                      Icons.arrow_forward_ios,
+                      size: SizeConfig.blockSizeHorizontal * 4,
+                    ),
+                  ],
+                ),
               ),
             ),
             Divider(),

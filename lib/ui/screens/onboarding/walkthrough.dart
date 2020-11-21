@@ -128,24 +128,54 @@ Widget getLastPage(BuildContext context) {
               ),
               textAlign: TextAlign.center,
             ),
-            Padding(
+            Container(
               padding: EdgeInsets.symmetric(
                   vertical: SizeConfig.blockSizeVertical * 5,
                   horizontal: SizeConfig.blockSizeHorizontal * 10),
-              child: TextFormField(
-                cursorColor: Theme.of(context).cursorColor,
-                decoration: InputDecoration(
-                  hintText: 'email',
-                  suffixIcon: IconButton(
-                    icon: Icon(Icons.arrow_forward),
-                    onPressed: () {
-                      Navigator.pushNamed(context, HomeScreen.routeName);
-                    },
+              child: Row(
+                mainAxisSize: MainAxisSize.max,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Expanded(
+                    child: Container(
+                      height: 50,
+                      child: TextFormField(
+                        textAlignVertical: TextAlignVertical.center,
+                        cursorColor: Theme.of(context).cursorColor,
+                        decoration: InputDecoration(
+                          hintText: 'email',
+                          border: OutlineInputBorder(
+                              borderRadius: BorderRadius.only(
+                                topLeft: Radius.circular(10),
+                                bottomLeft: Radius.circular(10),
+                              )
+                          ),
+                        ),
+                      ),
+                    ),
                   ),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                ),
+                  Container(
+                    height: 50,
+                    width: SizeConfig.blockSizeHorizontal * 18,
+                    alignment: Alignment.center,
+                    decoration: BoxDecoration(
+                      color: Constants.black,
+                      borderRadius: BorderRadius.only(
+                        topRight: Radius.circular(10),
+                        bottomRight: Radius.circular(10),
+                      )
+                    ),
+                    child: IconButton(
+                      icon: Icon(
+                        Icons.arrow_forward,
+                        color: Constants.white,
+                      ),
+                      onPressed: () {
+                        Navigator.pushNamed(context, HomeScreen.routeName);
+                      },
+                    ),
+                  )
+                ],
               ),
             ),
           ],
@@ -176,37 +206,44 @@ class _WalkThroughState extends State<WalkThrough> {
     SizeConfig().init(context);
     return Scaffold(
       backgroundColor: Colors.white,
-      body: Column(
-        children: <Widget>[
-          SizedBox(
-            height: SizeConfig.safeBlockVertical * 90,
-            width: double.infinity,
-            child: PageView(
-              controller: _pageController,
-              children: populatePages(context),
-              onPageChanged: (int index) {
-                _currentPageNotifier.value = index;
-                if (index == _titlesList.length) {
-                  setState(() {
-                    isLast = true;
-                  });
-                } else {
-                  setState(() {
-                    isLast = false;
-                  });
-                }
-              },
+      body: SingleChildScrollView(
+        child: Stack(
+          fit: StackFit.loose,
+          children: [
+            Column(
+              children: <Widget>[
+                SizedBox(
+                  height: SizeConfig.safeBlockVertical * 90,
+                  width: double.infinity,
+                  child: PageView(
+                    controller: _pageController,
+                    children: populatePages(context),
+                    onPageChanged: (int index) {
+                      _currentPageNotifier.value = index;
+                      if (index == _titlesList.length) {
+                        setState(() {
+                          isLast = true;
+                        });
+                      } else {
+                        setState(() {
+                          isLast = false;
+                        });
+                      }
+                    },
+                  ),
+                ),
+                //getLastPage(context),
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 20.0),
+                  child: Align(
+                    alignment: Alignment.bottomCenter,
+                    child: _buildCircleIndicator(),
+                  ),
+                )
+              ],
             ),
-          ),
-          //getLastPage(context),
-          Padding(
-            padding: const EdgeInsets.only(bottom: 20.0),
-            child: Align(
-              alignment: Alignment.bottomCenter,
-              child: _buildCircleIndicator(),
-            ),
-          )
-        ],
+          ],
+        ),
       ),
     );
   }

@@ -11,6 +11,9 @@ class Constants {
   static const Color textColor = Color(0xff212121);
   static const Color browseGrey = Color(0xff5F5F5F);
   static const Color tagYellow = Color(0xffF8BC3F);
+  static const Color black = Color(0xff000000);
+  static const Color white = Color(0xffEEEEEE);
+  static const Color green = Color(0xff388E3C);
 
   List<GenreData> getGenreList() {
     List<GenreData> list = [

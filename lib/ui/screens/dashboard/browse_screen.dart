@@ -83,13 +83,31 @@ class BrowseScreen extends StatelessWidget {
         shape:
             RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
         child: Padding(
-          padding: const EdgeInsets.all(8.0),
+          padding: const EdgeInsets.symmetric(horizontal: 12,vertical: 8),
           child: TextFormField(
+            textAlignVertical: TextAlignVertical.center,
             cursorColor: Theme.of(context).cursorColor,
+            style: TextStyle(
+              fontFamily: 'Metropolis',
+              fontWeight: FontWeight.w400,
+              fontSize: SizeConfig.blockSizeHorizontal * 5,
+            ),
             decoration: InputDecoration(
+              contentPadding: EdgeInsets.only(left: 10),
               hintText: 'Search for...',
+              hintStyle: TextStyle(
+                fontFamily: 'Metropolis',
+                fontWeight: FontWeight.w300,
+                fontSize: SizeConfig.blockSizeHorizontal * 5,
+              ),
               suffixIcon: IconButton(
-                icon: Icon(Icons.search),
+                icon: Padding(
+                  padding: const EdgeInsets.all(4),
+                  child: SvgPicture.asset(
+                    'assets/icons/search.svg',
+                    color: Constants.lightGrey
+                  ),
+                ),
                 onPressed: () {
                   //Navigator.pushNamed(context, HomeScreen.routeName);
                 },
