@@ -47,6 +47,7 @@ class _CameraScreenState extends State<CameraScreen> {
       await cameraController.initialize();
     } catch (e) {
       String errorText = 'Error ${e.code} \nError message: ${e.description}';
+      print(errorText);
     }
 
     if (mounted) {

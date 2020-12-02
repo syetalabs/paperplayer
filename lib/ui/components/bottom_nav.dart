@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg_provider/flutter_svg_provider.dart';
 import 'package:paperplayer/ui/screens/dashboard/browse_screen.dart';
 import 'package:paperplayer/ui/screens/dashboard/home.dart';
-import 'package:paperplayer/ui/screens/training/player_training_intro.dart';
+import 'package:paperplayer/ui/screens/player/player_walkthrough.dart';
 import 'package:paperplayer/util/constants.dart';
 import 'package:paperplayer/util/size_config.dart';
 
@@ -54,8 +54,8 @@ class BottomNav extends StatelessWidget {
                   radius: SizeConfig.blockSizeHorizontal * 8,
                   backgroundColor: Constants.darkTextColor,
                   child: GestureDetector(
-                    onTap: () {
-                      Navigator.pushNamed(context, TrainingIntro.routeName);
+                    onTap: (){
+                      Navigator.pushNamed(context, PlayerWalkThrough.routeName);
                     },
                     child: Icon(
                       Icons.stop_circle,
