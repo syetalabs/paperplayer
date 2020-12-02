@@ -3,12 +3,22 @@ import 'package:flutter_svg_provider/flutter_svg_provider.dart';
 import 'package:paperplayer/ui/screens/dashboard/browse_screen.dart';
 import 'package:paperplayer/ui/screens/dashboard/home.dart';
 import 'package:paperplayer/ui/screens/player/player_walkthrough.dart';
+import 'package:paperplayer/ui/screens/training/training_walkthrough.dart';
 import 'package:paperplayer/util/constants.dart';
 import 'package:paperplayer/util/size_config.dart';
 
 class BottomNav extends StatelessWidget {
   final int currentIndex;
   BottomNav(this.currentIndex);
+
+  void _settingModalBottomSheet(context) {
+    showModalBottomSheet(
+        context: context,
+        builder: (BuildContext bc) {
+          return TrainingWalkThrough();
+        }
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -55,7 +65,8 @@ class BottomNav extends StatelessWidget {
                   backgroundColor: Constants.darkTextColor,
                   child: GestureDetector(
                     onTap: (){
-                      Navigator.pushNamed(context, PlayerWalkThrough.routeName);
+                      _settingModalBottomSheet(context);
+                      //Navigator.pushNamed(context, PlayerWalkThrough.routeName);
                     },
                     child: Icon(
                       Icons.stop_circle,

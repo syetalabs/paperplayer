@@ -23,7 +23,11 @@ class _TrainingIntroState extends State<TrainingIntro> {
   }
 
   @override
-  dispose() {
+  dispose() async {
+    await SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+      DeviceOrientation.portraitDown,
+    ]);
     super.dispose();
   }
 

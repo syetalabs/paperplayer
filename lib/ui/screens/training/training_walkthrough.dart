@@ -4,39 +4,40 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:page_view_indicators/circle_page_indicator.dart';
+import 'package:paperplayer/ui/screens/training/player_training_intro.dart';
 import 'package:paperplayer/util/constants.dart';
 import 'package:paperplayer/util/size_config.dart';
 
-class PlayerWalkThrough extends StatefulWidget {
-  static const routeName = '/player_Playerwalkthrough_screen';
+class TrainingWalkThrough extends StatefulWidget {
+  static const routeName = '/training_walkthrough_screen';
   @override
-  _PlayerWalkThroughState createState() => _PlayerWalkThroughState();
+  _TrainingWalkThroughState createState() => _TrainingWalkThroughState();
 }
 
-class _PlayerWalkThroughState extends State<PlayerWalkThrough> {
+class _TrainingWalkThroughState extends State<TrainingWalkThrough> {
 
   ValueNotifier<int> _currentPageNotifier = ValueNotifier<int>(0);
   PageController _pageController = PageController();
 
   final List<String> _titlesList = [
-    'Welcome to PaperPlayer.',
-    '1-Set your phone in a Horizontal Stand.',
-    '2-Show us your Album',
-    '3-Sit back and Listen',
+    'Help train PaperPlayer',
+    'Show us your Albums',
+    'Thank you for your help',
   ];
 
   final List<String> _subtitlesList = [
-    'Here’s how Beta 0.3.1 works…',
-    '(Alexa & Google Device versions out soon)',
-    '(Hint: This Beta version only likes the world’s greatest Comeback Album )',
-    '(PaperPlayer can remember which tracks you prefer to skip )',
+    'For Paper Player to work, we need to train our Ai engine how to '
+        'recognize Albums.',
+    'You can help by joining our Beta Trainer Team and show us a few '
+        'of your Albums',
+    'To start, set your phone as a Horizontal Device and let’s take some '
+        'shots of your collection. Thanks !',
   ];
 
   final List<String> _imageList = [
     'assets/pl1.png',
-    'assets/pl2.png',
+    'assets/albumImg.jpg',
     'assets/pl3.png',
-    'assets/pl4.png',
   ];
   final List<Widget> _pages = [];
 
@@ -57,27 +58,32 @@ class _PlayerWalkThroughState extends State<PlayerWalkThrough> {
 
   Widget _buildCircleIndicator() {
     return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         _currentPageNotifier.value != 0 ? GestureDetector(
           onTap: (){
-           setState(() {
-             _pageController.animateToPage(
-                 _currentPageNotifier.value-1,
-               duration: Duration(milliseconds: 300),
-               curve: Curves.linear,
-             );
-           });
+            setState(() {
+              _pageController.animateToPage(
+                _currentPageNotifier.value-1,
+                duration: Duration(milliseconds: 300),
+                curve: Curves.linear,
+              );
+            });
           },
           child: Container(
-            width: 30,
-            height: 30,
             alignment: Alignment.center,
-            child: Icon(
-              Icons.arrow_back_ios_rounded,
-              size: 20,
+            width: SizeConfig.blockSizeHorizontal * 13,
+            child: new Text(
+              "back",
+              style: TextStyle(
+                color: Constants.tagYellow,
+                fontFamily: 'Metropolis',
+                fontWeight: FontWeight.w500,
+                fontSize: SizeConfig.blockSizeHorizontal * 5.6,
+              ),
             ),
           ),
-        ) : SizedBox(width: 30),
+        ) : SizedBox(width: SizeConfig.blockSizeHorizontal * 13),
         SizedBox(width: 8),
         CirclePageIndicator(
           selectedDotColor: Constants.textColor.withOpacity(0.4),
@@ -92,22 +98,43 @@ class _PlayerWalkThroughState extends State<PlayerWalkThrough> {
           onTap: (){
             setState(() {
               _pageController.animateToPage(
-                  _currentPageNotifier.value+1,
+                _currentPageNotifier.value+1,
                 duration: Duration(milliseconds: 300),
                 curve: Curves.linear,
               );
             });
           },
           child: Container(
-            width: 30,
-            height: 30,
             alignment: Alignment.center,
-            child: Icon(
-              Icons.arrow_forward_ios_rounded,
-              size: 20,
+            width: SizeConfig.blockSizeHorizontal * 13,
+            child: new Text(
+              "next",
+              style: TextStyle(
+                color: Constants.tagYellow,
+                fontFamily: 'Metropolis',
+                fontWeight: FontWeight.w500,
+                fontSize: SizeConfig.blockSizeHorizontal * 5.6,
+              ),
             ),
           ),
-        ) : SizedBox(width: 30),
+        ) : GestureDetector(
+          onTap: (){
+            Navigator.pushNamed(context, TrainingIntro.routeName);
+          },
+          child: Container(
+            alignment: Alignment.center,
+            width: SizeConfig.blockSizeHorizontal * 13,
+            child: new Text(
+              "start",
+              style: TextStyle(
+                color: Constants.tagYellow,
+                fontFamily: 'Metropolis',
+                fontWeight: FontWeight.w500,
+                fontSize: SizeConfig.blockSizeHorizontal * 5.6,
+              ),
+            ),
+          ),
+        ),
       ],
     );
   }
@@ -115,42 +142,22 @@ class _PlayerWalkThroughState extends State<PlayerWalkThrough> {
   Widget getPage(
       String image, String title, String subTitle, BuildContext context) {
     return Stack(
-      alignment: Alignment.topCenter,
+      alignment: Alignment.bottomCenter,
       children: [
         Container(
           width: SizeConfig.screenWidth,
-          height: SizeConfig.screenHeight,
-          padding: const EdgeInsets.only(top: 50),
+          height: SizeConfig.safeBlockVertical * 45,
+          padding: const EdgeInsets.only(top: 30),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.start,
             children: <Widget>[
               Container(
-                height: SizeConfig.safeBlockVertical * 40,
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(
-                      SizeConfig.safeBlockVertical * 20,
-                    ),
-                    boxShadow: [
-                      if(title.startsWith('1'))
-                        BoxShadow(
-                          color: Constants.darkGrey.withOpacity(0.3),
-                          spreadRadius: 3,
-                          blurRadius: 17,
-                          offset: Offset(0, 3), // changes position of shadow
-                        ),
-                    ]
-                ),
-                child: title[0]=='1'
-                    ? ClipRRect(
-                  borderRadius: BorderRadius.circular(
-                    SizeConfig.safeBlockVertical * 20,
-                  ),
-                  child: Image.asset(image),
-                ) : Image.asset(image),
+                height: SizeConfig.safeBlockVertical * 17,
+                child: Image.asset(image),
               ),
               SizedBox(
-                height: SizeConfig.safeBlockVertical * 5,
+                height: SizeConfig.safeBlockVertical * 2.5,
               ),
               Text(
                 title,
@@ -158,19 +165,20 @@ class _PlayerWalkThroughState extends State<PlayerWalkThrough> {
                   color: Constants.darkTextColor,
                   fontFamily: 'Metropolis',
                   fontWeight: FontWeight.w800,
-                  fontSize: SizeConfig.blockSizeHorizontal * 3.5,
+                  fontSize: SizeConfig.blockSizeHorizontal * 6,
                 ),
                 textAlign: TextAlign.center,
               ),
               Padding(
-                padding: const EdgeInsets.all(8),
+                padding: const EdgeInsets.only(left: 15, right: 15, top: 16),
                 child: Text(
                   subTitle,
                   style: TextStyle(
                     fontFamily: 'Metropolis',
                     color: Constants.darkTextColor,
-                    fontSize: SizeConfig.blockSizeHorizontal * 2.5,
+                    fontSize: SizeConfig.blockSizeHorizontal * 4.4,
                     fontStyle: FontStyle.normal,
+                    height: 1.2,
                   ),
                   textAlign: TextAlign.center,
                 ),
@@ -191,7 +199,7 @@ class _PlayerWalkThroughState extends State<PlayerWalkThrough> {
                   ),
                 ),
                 onPressed: (){
-
+                  Navigator.pushNamed(context, TrainingIntro.routeName);
                 },
                 padding: EdgeInsets.symmetric(horizontal: 70, vertical: 12),
                 color: Constants.textColor,
@@ -208,10 +216,6 @@ class _PlayerWalkThroughState extends State<PlayerWalkThrough> {
   void initState(){
     super.initState();
     populatePages(context);
-    SystemChrome.setPreferredOrientations([
-      DeviceOrientation.landscapeRight,
-      DeviceOrientation.landscapeLeft,
-    ]);
     setState(() {
       _currentPageNotifier = ValueNotifier<int>(0);
     });
@@ -219,24 +223,21 @@ class _PlayerWalkThroughState extends State<PlayerWalkThrough> {
 
   @override
   dispose() async {
-    await SystemChrome.setPreferredOrientations([
-      DeviceOrientation.portraitUp,
-      DeviceOrientation.portraitDown,
-    ]);
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
-    return Scaffold(
-      backgroundColor: Constants.backgroundColor,
-      body: Stack(
+    return Container(
+      height: SizeConfig.blockSizeVertical * 45,
+      color: Constants.backgroundColor,
+      child: Stack(
         alignment: Alignment.topCenter,
         children: <Widget>[
           SingleChildScrollView(
             child:  SizedBox(
-              height: SizeConfig.screenHeight,
+              height: SizeConfig.blockSizeVertical * 45,
               width: double.infinity,
               child: PageView(
                 controller: _pageController,
@@ -247,8 +248,6 @@ class _PlayerWalkThroughState extends State<PlayerWalkThrough> {
                       _subtitlesList[1], context),
                   getPage(_imageList[2], _titlesList[2],
                       _subtitlesList[2], context),
-                  getPage(_imageList[3], _titlesList[3],
-                      _subtitlesList[3], context),
                 ],
                 onPageChanged: (int index) {
                   setState(() {
@@ -260,21 +259,12 @@ class _PlayerWalkThroughState extends State<PlayerWalkThrough> {
           ),
           //getLastPage(context),
           Positioned(
-            bottom: SizeConfig.blockSizeVertical* 19,
+            bottom: SizeConfig.blockSizeVertical * 3,
+            left: 25,
+            right: 25,
             child: Align(
               alignment: Alignment.bottomCenter,
               child: _buildCircleIndicator(),
-            ),
-          ),
-          Positioned(
-            right: 15,
-            bottom:10,
-            child: Container(
-              width: SizeConfig.safeBlockVertical * 40,
-              child: SvgPicture.asset(
-                'assets/ppLogo.svg',
-                color: Constants.textColor.withOpacity(0.8),
-              ),
             ),
           ),
         ],
