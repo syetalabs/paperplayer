@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:paperplayer/data/models/genre_data.dart';
 import 'package:paperplayer/ui/components/appbar.dart';
@@ -8,8 +9,35 @@ import 'package:paperplayer/ui/components/user_drawer.dart';
 import 'package:paperplayer/util/constants.dart';
 import 'package:paperplayer/util/size_config.dart';
 
-class BrowseScreen extends StatelessWidget {
+class BrowseScreen extends StatefulWidget {
   static const routeName = '/browse-screen';
+
+  @override
+  _BrowseScreenState createState() => _BrowseScreenState();
+}
+
+class _BrowseScreenState extends State<BrowseScreen> {
+  
+  @override
+  void initState() {
+    super.initState();
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+      DeviceOrientation.portraitDown,
+    ]);
+  }
+
+  @override
+  dispose() async {
+    await SystemChrome.setPreferredOrientations([
+      DeviceOrientation.landscapeRight,
+      DeviceOrientation.landscapeLeft,
+      DeviceOrientation.portraitUp,
+      DeviceOrientation.portraitDown,
+    ]);
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
@@ -83,7 +111,7 @@ class BrowseScreen extends StatelessWidget {
         shape:
             RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 12,vertical: 8),
+          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
           child: TextFormField(
             textAlignVertical: TextAlignVertical.center,
             cursorColor: Theme.of(context).cursorColor,
@@ -103,10 +131,8 @@ class BrowseScreen extends StatelessWidget {
               suffixIcon: IconButton(
                 icon: Padding(
                   padding: const EdgeInsets.all(4),
-                  child: SvgPicture.asset(
-                    'assets/icons/search.svg',
-                    color: Constants.lightGrey
-                  ),
+                  child: SvgPicture.asset('assets/icons/search.svg',
+                      color: Constants.lightGrey),
                 ),
                 onPressed: () {
                   //Navigator.pushNamed(context, HomeScreen.routeName);
