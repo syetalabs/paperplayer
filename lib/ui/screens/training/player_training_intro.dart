@@ -25,8 +25,6 @@ class _TrainingIntroState extends State<TrainingIntro> {
   @override
   dispose() async {
     await SystemChrome.setPreferredOrientations([
-      DeviceOrientation.landscapeRight,
-      DeviceOrientation.landscapeLeft,
       DeviceOrientation.portraitUp,
       DeviceOrientation.portraitDown,
     ]);
@@ -166,6 +164,7 @@ class _TrainingIntroState extends State<TrainingIntro> {
               right: 26,
               child: GestureDetector(
                 onTap: () {
+                  Navigator.pop(context);
                   Navigator.pop(context);
                 },
                 child: SvgPicture.asset(

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:paperplayer/ui/components/album_card.dart';
 import 'package:paperplayer/ui/components/appbar.dart';
 import 'package:paperplayer/ui/components/bottom_nav.dart';
@@ -8,8 +9,24 @@ import 'package:paperplayer/ui/components/user_drawer.dart';
 import 'package:paperplayer/util/constants.dart';
 import 'package:paperplayer/util/size_config.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   static const routeName = '/home-screen';
+
+  @override
+  _HomeScreenState createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+
+  @override
+  void initState(){
+    super.initState();
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+      DeviceOrientation.portraitDown,
+    ]);
+  }
+
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
@@ -76,4 +93,5 @@ class HomeScreen extends StatelessWidget {
       ),
     );
   }
+
 }
