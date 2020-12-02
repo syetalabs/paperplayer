@@ -4,13 +4,11 @@ import 'package:paperplayer/ui/screens/dashboard/home.dart';
 import 'package:paperplayer/ui/screens/main_drawer/about.dart';
 import 'package:paperplayer/ui/screens/main_drawer/contact.dart';
 import 'package:paperplayer/ui/screens/main_drawer/how.dart';
+import 'package:paperplayer/ui/screens/player/player_walkthrough.dart';
 import 'package:paperplayer/ui/screens/training/camera.dart';
 import 'package:paperplayer/ui/screens/training/player_training_intro.dart';
 import 'package:paperplayer/ui/screens/user_drawer/cart.dart';
-import 'package:paperplayer/ui/screens/user_drawer/cart.dart';
 import 'package:paperplayer/ui/screens/user_drawer/collection.dart';
-import 'package:paperplayer/ui/screens/user_drawer/collection.dart';
-import 'package:paperplayer/ui/screens/user_drawer/personal.dart';
 import 'package:paperplayer/ui/screens/user_drawer/personal.dart';
 import 'ui/screens/onboarding/walkthrough.dart';
 
@@ -39,6 +37,7 @@ class MyApp extends StatelessWidget {
         Collection.routeName: (ctx) => Collection(),
         Cart.routeName: (ctx) => Cart(),
         Personal.routeName: (ctx) => Personal(),
+        PlayerWalkThrough.routeName: (ctx) => PlayerWalkThrough(),
       },
     );
   }

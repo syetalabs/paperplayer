@@ -10,7 +10,6 @@ import 'package:paperplayer/util/constants.dart';
 import 'package:paperplayer/util/size_config.dart';
 
 class HomeScreen extends StatefulWidget {
-
   static const routeName = '/home-screen';
 
   @override
@@ -107,4 +106,5 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
     );
   }
+
 }
