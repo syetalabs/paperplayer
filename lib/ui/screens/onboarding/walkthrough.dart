@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 
 import 'package:page_view_indicators/circle_page_indicator.dart';
+import 'package:paperplayer/cubit/login/login_cubit.dart';
 import 'package:paperplayer/ui/screens/dashboard/home.dart';
 import 'package:paperplayer/util/constants.dart';
 import 'package:paperplayer/util/size_config.dart';
 
 final _currentPageNotifier = ValueNotifier<int>(0);
 final _pageController = PageController();
+TextEditingController _emailController = TextEditingController();
 
 final List<String> _titlesList = [
   '\'The Album\' gets it’s \nComeback Album.',
@@ -141,38 +144,65 @@ Widget getLastPage(BuildContext context) {
                     child: Container(
                       height: 50,
                       child: TextFormField(
+                        controller: _emailController,
                         textAlignVertical: TextAlignVertical.center,
                         cursorColor: Theme.of(context).cursorColor,
                         decoration: InputDecoration(
                           hintText: 'email',
                           border: OutlineInputBorder(
                               borderRadius: BorderRadius.only(
-                                topLeft: Radius.circular(10),
-                                bottomLeft: Radius.circular(10),
-                              )
-                          ),
+                            topLeft: Radius.circular(10),
+                            bottomLeft: Radius.circular(10),
+                          )),
                         ),
                       ),
                     ),
                   ),
+                  BlocConsumer<LoginCubit, LoginState>(
+                          builder: (context, state) {
+                            if (state is LoginLoading) {
+                              return Text('Loading...');
+                            } else {
+                              return Container();
+                            }
+                          },
+                          listener: (context, state) {
+                            if (state is LoginError) {
+                              Scaffold.of(context).showSnackBar(
+                                SnackBar(
+                                  content: Text(state.messege),
+                                ),
+                              );
+                            } else if (state is LoginError) {
+                              Scaffold.of(context).showSnackBar(
+                                SnackBar(
+                                  content: Text('Loading user data...'),
+                                ),
+                              );
+                            } else if (state is LoggedIn) {
+                              Navigator.pushNamed(context, HomeScreen.routeName);
+                            }
+                          },
+                        ),
                   Container(
                     height: 50,
                     width: SizeConfig.blockSizeHorizontal * 18,
                     alignment: Alignment.center,
                     decoration: BoxDecoration(
-                      color: Constants.black,
-                      borderRadius: BorderRadius.only(
-                        topRight: Radius.circular(10),
-                        bottomRight: Radius.circular(10),
-                      )
-                    ),
+                        color: Constants.black,
+                        borderRadius: BorderRadius.only(
+                          topRight: Radius.circular(10),
+                          bottomRight: Radius.circular(10),
+                        )),
                     child: IconButton(
                       icon: Icon(
                         Icons.arrow_forward,
                         color: Constants.white,
                       ),
                       onPressed: () {
-                        Navigator.pushNamed(context, HomeScreen.routeName);
+                        print(_emailController.text);
+                        final loginCubit = BlocProvider.of<LoginCubit>(context);
+                        loginCubit.login(_emailController.text);
                       },
                     ),
                   )
@@ -203,7 +233,7 @@ class _WalkThroughState extends State<WalkThrough> {
   bool isLast = false;
 
   @override
-  void initState(){
+  void initState() {
     super.initState();
     SystemChrome.setPreferredOrientations([
       DeviceOrientation.portraitUp,
@@ -245,6 +275,7 @@ class _WalkThroughState extends State<WalkThrough> {
                         setState(() {
                           isLast = true;
                         });
+                        
                       } else {
                         setState(() {
                           isLast = false;

@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "159483645730",
+    "project_id": "paperplayer-c2f25",
+    "storage_bucket": "paperplayer-c2f25.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:159483645730:android:709d87be8d9d4fb00fdf7b",
+        "android_client_info": {
+          "package_name": "com.example.paperplayer"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "159483645730-je1iblv41cugejvhdc8ti8io4p5htadu.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDhM6Beh1Xema4sfwp3vakF5PceFgqIhz8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "159483645730-je1iblv41cugejvhdc8ti8io4p5htadu.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

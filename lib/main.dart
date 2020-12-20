@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:paperplayer/data/repositories/login_repository.dart';
 import 'package:paperplayer/ui/screens/dashboard/browse_screen.dart';
 import 'package:paperplayer/ui/screens/dashboard/home.dart';
 import 'package:paperplayer/ui/screens/main_drawer/about.dart';
@@ -10,10 +12,17 @@ import 'package:paperplayer/ui/screens/training/player_training_intro.dart';
 import 'package:paperplayer/ui/screens/user_drawer/cart.dart';
 import 'package:paperplayer/ui/screens/user_drawer/collection.dart';
 import 'package:paperplayer/ui/screens/user_drawer/personal.dart';
+import 'cubit/login/login_cubit.dart';
 import 'ui/screens/onboarding/walkthrough.dart';
 
 void main() {
-  runApp(MyApp());
+  WidgetsFlutterBinding.ensureInitialized();
+  runApp(
+    BlocProvider<LoginCubit>(
+      create: (context) => LoginCubit(LoginRepo()),
+      child: MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
