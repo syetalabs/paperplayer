@@ -147,6 +147,12 @@ Widget getLastPage(BuildContext context) {
                         controller: _emailController,
                         textAlignVertical: TextAlignVertical.center,
                         cursorColor: Theme.of(context).cursorColor,
+                        validator: (value) =>
+                            !RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
+                                    .hasMatch(value)
+                                ? 'Please enter valid email'
+                                : // return an error message
+                                null,
                         decoration: InputDecoration(
                           hintText: 'email',
                           border: OutlineInputBorder(
@@ -159,31 +165,31 @@ Widget getLastPage(BuildContext context) {
                     ),
                   ),
                   BlocConsumer<LoginCubit, LoginState>(
-                          builder: (context, state) {
-                            if (state is LoginLoading) {
-                              return Text('Loading...');
-                            } else {
-                              return Container();
-                            }
-                          },
-                          listener: (context, state) {
-                            if (state is LoginError) {
-                              Scaffold.of(context).showSnackBar(
-                                SnackBar(
-                                  content: Text(state.messege),
-                                ),
-                              );
-                            } else if (state is LoginError) {
-                              Scaffold.of(context).showSnackBar(
-                                SnackBar(
-                                  content: Text('Loading user data...'),
-                                ),
-                              );
-                            } else if (state is LoggedIn) {
-                              Navigator.pushNamed(context, HomeScreen.routeName);
-                            }
-                          },
-                        ),
+                    builder: (context, state) {
+                      if (state is LoginLoading) {
+                        return Text('Loading...');
+                      } else {
+                        return Container();
+                      }
+                    },
+                    listener: (context, state) {
+                      if (state is LoginError) {
+                        Scaffold.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text(state.messege),
+                          ),
+                        );
+                      } else if (state is LoginError) {
+                        Scaffold.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text('Loading user data...'),
+                          ),
+                        );
+                      } else if (state is LoggedIn) {
+                        Navigator.pushNamed(context, HomeScreen.routeName);
+                      }
+                    },
+                  ),
                   Container(
                     height: 50,
                     width: SizeConfig.blockSizeHorizontal * 18,
@@ -274,8 +280,10 @@ class _WalkThroughState extends State<WalkThrough> {
                       if (index == _titlesList.length) {
                         setState(() {
                           isLast = true;
+                          final loginCubit =
+                              BlocProvider.of<LoginCubit>(context);
+                          loginCubit.autoLogin();
                         });
-                        
                       } else {
                         setState(() {
                           isLast = false;

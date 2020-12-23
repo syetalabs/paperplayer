@@ -24,11 +24,18 @@ class LoginCubit extends Cubit<LoginState> {
     }
   }
 
-  Future<void> autoLogin(){
-    try{
-
-    }catch(error){
-      
+  Future<void> autoLogin() async {
+    try {
+      emit(LoginLoading());
+      bool isLoggedIn = await _authRepository.isLoggedIn();
+      print(isLoggedIn);
+      if (isLoggedIn) {
+        emit(LoggedIn(_authRepository.userId));
+      } else {
+        emit(LoginInitial());
+      }
+    } catch (error) {
+      emit(LoginError(error.toString()));
     }
   }
 }
